@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=4 uid="uid://b172xvh31xye7"]
+[gd_scene load_steps=11 format=4 uid="uid://b172xvh31xye7"]
 
+[ext_resource type="Script" path="res://HomeScene.cs" id="1_j54ic"]
 [ext_resource type="Texture2D" uid="uid://dvwbbqu081tx7" path="res://brackeys_platformer_assets/sprites/world_tileset.png" id="1_nfns1"]
+[ext_resource type="Texture2D" uid="uid://drqgnv121fal2" path="res://brackeys_platformer_assets/sprites/knight.png" id="2_d03oh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3w3gj"]
 texture = ExtResource("1_nfns1")
@@ -135,11 +137,54 @@ texture = ExtResource("1_nfns1")
 [sub_resource type="TileSet" id="TileSet_a244w"]
 sources/0 = SubResource("TileSetAtlasSource_3w3gj")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_38hvn"]
+atlas = ExtResource("2_d03oh")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mm2n7"]
+atlas = ExtResource("2_d03oh")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_80hbr"]
+atlas = ExtResource("2_d03oh")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_spfyi"]
+atlas = ExtResource("2_d03oh")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2qgck"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_38hvn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mm2n7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_80hbr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_spfyi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
 [node name="Node2D" type="Node2D"]
 position = Vector2(173, 111)
+script = ExtResource("1_j54ic")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(117, 0)
 scale = Vector2(2, 2)
 tile_map_data = PackedByteArray("AAD9/wMAAAABAAAAAAD+/wMAAAABAAEAAAD//wMAAAABAAEAAAAAAAMAAAABAAEAAAABAAMAAAABAAEAAAACAAMAAAADAAEAAAADAAMAAAADAAEAAAD9/wQAAAABAAEAAAD+/wQAAAABAAEAAAD//wQAAAABAAAAAAAAAAQAAAADAAEAAAABAAQAAAADAAEAAAACAAQAAAADAAEAAAABAAUAAAAFAAAAAAAAAAUAAAAFAAAAAAD//wUAAAABAAAAAAD+/wUAAAABAAAAAAD+/wYAAAABAAEAAAD//wYAAAAFAAAAAAD+/wEAAAAAAAAAAAD//wEAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAIAAAABAAEAAAD+/wIAAAABAAEAAAABAAIAAAABAAEAAAACAAIAAAAAAAAAAAABAAEAAAAAAAAAAAADAAIAAAAAAAAAAAAEAAIAAAAAAAAAAAAFAAIAAAAAAAAAAAD9/wIAAAAAAAAAAAD8/wIAAAAAAAAAAAD7/wIAAAAAAAAAAAAGAAUAAAAAAAAAAAAHAAUAAAAAAAAAAAAIAAUAAAAAAAAAAAAJAAMAAAAAAAAAAAAKAAMAAAAAAAAAAAALAAMAAAAAAAAAAAAFAAMAAAADAAEAAAAFAAQAAAADAAEAAAAFAAUAAAADAAEAAAAEAAMAAAADAAEAAAADAAQAAAADAAEAAAAEAAQAAAAFAAAAAAAEAAUAAAAFAAAAAAADAAUAAAAFAAAAAAACAAUAAAAFAAAAAAABAAYAAAAFAAAAAAACAAYAAAAFAAAAAAADAAYAAAAFAAAAAAADAAcAAAAFAAAAAAAEAAcAAAAFAAAAAAAEAAYAAAAFAAAAAAAFAAYAAAAFAAAAAAAFAAcAAAAFAAAAAAAGAAcAAAAFAAAAAAACAAcAAAAFAAAAAAABAAcAAAAFAAAAAAAAAAcAAAAFAAAAAAAAAAYAAAAFAAAAAAAGAAYAAAABAAEAAAAHAAYAAAABAAAAAAAHAAcAAAABAAEAAAAIAAcAAAABAAEAAAAIAAYAAAABAAAAAAD9/wUAAAABAAAAAAD8/wUAAAABAAAAAAD8/wQAAAABAAAAAAD8/wMAAAABAAAAAAD7/wMAAAABAAAAAAD7/wQAAAABAAAAAAD6/wQAAAABAAAAAAD5/wQAAAAAAAEAAAD5/wMAAAAAAAEAAAD6/wMAAAAAAAEAAAD4/wQAAAAAAAEAAAD4/wMAAAAAAAEAAAAJAAUAAAAAAAEAAAAJAAQAAAAAAAEAAAAKAAQAAAAAAAEAAAAKAAUAAAAAAAEAAAAJAAYAAAAIAAEAAAAKAAYAAAAIAAEAAAALAAQAAAAAAAEAAAALAAUAAAAAAAEAAAAMAAUAAAAAAAEAAAAMAAYAAAAAAAEAAAALAAYAAAAAAAEAAAAKAAcAAAAIAAEAAAAJAAcAAAAIAAEAAAALAAcAAAAIAAEAAAD//wcAAAAIAAEAAAD+/wcAAAAIAAEAAAD9/wcAAAAIAAEAAAD9/wYAAAAIAAEAAAD8/wYAAAAIAAEAAAD7/wYAAAAIAAEAAAD7/wUAAAAIAAEAAAD6/wUAAAAIAAEAAAD5/wUAAAAIAAEAAAD4/wUAAAAIAAEAAAD4/wYAAAAIAAEAAAD5/wYAAAAIAAEAAAD6/wYAAAAIAAEAAAD7/wcAAAAIAAEAAAD8/wcAAAAIAAEAAAD6/wcAAAAIAAEAAAD5/wcAAAAIAAEAAAD4/wcAAAAIAAEAAAD3/wcAAAAIAAEAAAD3/wYAAAAIAAEAAAD3/wUAAAAIAAEAAAD//wIAAAABAAEAAAA=")
 tile_set = SubResource("TileSet_a244w")
+
+[node name="knight" type="AnimatedSprite2D" parent="."]
+position = Vector2(-32.5, -48.5)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_2qgck")
+frame_progress = 0.432887
