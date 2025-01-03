@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://dnlth2ic2xpf1"]
+[gd_scene load_steps=13 format=4 uid="uid://dnlth2ic2xpf1"]
 
 [ext_resource type="Script" path="res://HomeScene.cs" id="1_j54ic"]
 [ext_resource type="Texture2D" uid="uid://dvwbbqu081tx7" path="res://brackeys_platformer_assets/sprites/world_tileset.png" id="1_nfns1"]
@@ -137,6 +137,9 @@ texture = ExtResource("1_nfns1")
 [sub_resource type="TileSet" id="TileSet_a244w"]
 sources/0 = SubResource("TileSetAtlasSource_3w3gj")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e45h2"]
+size = Vector2(246, 190)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_38hvn"]
 atlas = ExtResource("2_d03oh")
 region = Rect2(0, 0, 32, 32)
@@ -173,8 +176,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e45h2"]
-size = Vector2(240, 184)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_63i5d"]
+size = Vector2(62.5, 76.5)
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(125, 163)
@@ -186,15 +189,21 @@ scale = Vector2(4, 4)
 tile_map_data = PackedByteArray("AAD///7/AAAIAAEAAAAAAP7/AAAIAAEAAAABAP7/AAAIAAEAAAACAP7/AAAIAAEAAAABAP//AAAIAAEAAAABAAAAAAAIAAEAAAACAAAAAAAIAAEAAAACAP//AAAIAAEAAAAAAP//AAAIAAEAAAD/////AAAIAAEAAAD//wAAAAAIAAEAAAAAAAAAAAAIAAEAAAA=")
 tile_set = SubResource("TileSet_a244w")
 
-[node name="knight" type="AnimatedSprite2D" parent="."]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(74, -22)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(107, -12)
+shape = SubResource("RectangleShape2D_e45h2")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="knight" type="AnimatedSprite2D" parent="CharacterBody2D"]
 position = Vector2(-32.5, -48.5)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_2qgck")
 frame_progress = 0.432887
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(74, -22)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(104, -15)
-shape = SubResource("RectangleShape2D_e45h2")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+position = Vector2(-34.25, -39.25)
+shape = SubResource("RectangleShape2D_63i5d")
