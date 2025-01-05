@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=4 uid="uid://dnlth2ic2xpf1"]
+[gd_scene load_steps=25 format=4 uid="uid://dnlth2ic2xpf1"]
 
 [ext_resource type="Script" path="res://HomeScene.cs" id="1_j54ic"]
 [ext_resource type="Texture2D" uid="uid://dvwbbqu081tx7" path="res://brackeys_platformer_assets/sprites/world_tileset.png" id="1_nfns1"]
@@ -138,9 +138,6 @@ texture = ExtResource("1_nfns1")
 [sub_resource type="TileSet" id="TileSet_a244w"]
 sources/0 = SubResource("TileSetAtlasSource_3w3gj")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e45h2"]
-size = Vector2(246, 190)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_38hvn"]
 atlas = ExtResource("2_d03oh")
 region = Rect2(0, 0, 32, 32)
@@ -272,7 +269,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_63i5d"]
-size = Vector2(67, 83)
+size = Vector2(61.5, 71)
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(98, 245)
@@ -280,16 +277,9 @@ script = ExtResource("1_j54ic")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-5, 276)
-scale = Vector2(4, 4)
-tile_map_data = PackedByteArray("AAD///7/AAAAAAAAAAAAAP7/AAAAAAAAAAABAP7/AAAAAAAAAAABAP//AAAEAAEAAAABAAAAAAAEAAEAAAACAAAAAAAEAAEAAAACAP//AAAEAAEAAAAAAP//AAAEAAEAAAD/////AAAEAAEAAAD//wAAAAAEAAEAAAAAAAAAAAAEAAEAAAACAP7/AAAAAAAAAAA=")
+scale = Vector2(4.01693, 4)
+tile_map_data = PackedByteArray("AAD///7/AAAAAAAAAAAAAP7/AAAAAAAAAAABAP7/AAAAAAAAAAABAP//AAAEAAEAAAABAAAAAAAEAAEAAAACAAAAAAAEAAEAAAACAP//AAAEAAEAAAAAAP//AAAEAAEAAAD/////AAAEAAEAAAD//wAAAAAEAAEAAAAAAAAAAAAEAAEAAAACAP7/AAAAAAAAAAAFAP7/AAACAAAAAAAGAP7/AAACAAAAAAAHAP7/AAACAAAAAAAJAPz/AAACAAAAAAAKAPz/AAACAAAAAAALAPz/AAACAAAAAAA=")
 tile_set = SubResource("TileSet_a244w")
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(-48, 254)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(107, -12)
-shape = SubResource("RectangleShape2D_e45h2")
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 
@@ -300,5 +290,5 @@ sprite_frames = SubResource("SpriteFrames_2qgck")
 animation = &"jump_animation"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
-position = Vector2(-28, -21)
+position = Vector2(-30.75, -16.5)
 shape = SubResource("RectangleShape2D_63i5d")

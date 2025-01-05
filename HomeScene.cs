@@ -40,8 +40,13 @@ public partial class HomeScene : Node2D
 
 		_tileMap = GetNode<TileMapLayer>("TileMapLayer");
 		var tiles = GetAllTiles();
-		
-		// Debug print to see what we found
+
+		// ShowTilePositions(tiles);
+		CreateCollisionShapesForTiles(tiles);
+	}
+
+	private void ShowTilePositions(List<TileData> tiles)
+	{
 		foreach (var tile in tiles)
 		{
 			GD.Print($"Tile at {tile.Position}, ID: {tile.TileId}, Atlas: {tile.AtlasCoords}");
@@ -88,8 +93,8 @@ public partial class HomeScene : Node2D
 			_wasJumpReleased = true;
 		}
 
-		// if (Input.IsKeyPressed(Key.W)) velocity.Y -= 1;
-		// if (Input.IsKeyPressed(Key.S)) velocity.Y += 1;
+		if (Input.IsKeyPressed(Key.W)) velocity.Y -= 1;
+		if (Input.IsKeyPressed(Key.S)) velocity.Y += 1;
 		if (Input.IsKeyPressed(Key.A)) 
 		{
 			velocity.X -= 1;
@@ -144,5 +149,41 @@ public partial class HomeScene : Node2D
 		}
 
 		return tiles;
+	}
+
+	private void CreateCollisionShapesForTiles(List<TileData> tiles)
+	{
+		// Base tile size is 16x16
+		var tileSize = new Vector2(16, 16);
+		// Account for the TileMap's scale of 4 AND scale by 1.6 instead of 2
+		var scaledTileSize = tileSize * 3.0f;
+		
+		GD.Print($"Scaled tile size: {scaledTileSize}");
+		GD.Print($"TileMap position: {_tileMap.Position}");
+
+		var collisionParent = new Node2D();
+		AddChild(collisionParent);
+
+		foreach (var tile in tiles)
+		{
+			var staticBody = new StaticBody2D();
+			var collision = new CollisionShape2D();
+			var shape = new RectangleShape2D();
+			
+			shape.Size = scaledTileSize;
+			collision.Shape = shape;
+			staticBody.AddChild(collision);
+
+			// Get the tile's world position
+			var tilePos = _tileMap.MapToLocal(tile.Position);
+			GD.Print($"Tile at {tile.Position}, World pos: {tilePos}");
+			
+			// Scale the local position by 4 to match TileMap's scale
+			var scaledPos = tilePos * 4;
+			// Add TileMap position and center offset
+			staticBody.Position = _tileMap.Position + scaledPos + scaledTileSize / 5.0f;
+			
+			collisionParent.AddChild(staticBody);
+		}
 	}
 }
