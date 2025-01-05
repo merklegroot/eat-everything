@@ -55,7 +55,7 @@ public partial class HomeScene : Node2D
 
 	private bool _wasJumpReleased = true;
 	private DateTime? _jumpStartTime;
-	
+
 	public override void _Process(double delta)
 	{
 		if (Input.IsKeyPressed(Key.R))
@@ -64,53 +64,54 @@ public partial class HomeScene : Node2D
 			return;
 		}
 
-		var velocity = Vector2.Zero;
+		var velocity = _characterBody.Velocity;
 
-		if (_jumpStartTime.HasValue)
+		// Handle horizontal movement
+		float horizontalInput = 0;
+		if (Input.IsKeyPressed(Key.A)) 
 		{
-			var jumpElapsedTime = DateTime.UtcNow - _jumpStartTime;;
-			if(jumpElapsedTime >= TimeSpan.FromMilliseconds(250))
-			{
-				_jumpStartTime = null;
-			}
-			
-			velocity.Y -= 2;
+			horizontalInput -= 1;
+			_knight.FlipH = true;
+		}
+		if (Input.IsKeyPressed(Key.D)) 
+		{
+			horizontalInput += 1;
+			_knight.FlipH = false;
 		}
 
-		velocity.Y += 1.0f;
-		
+		// Set horizontal velocity
+		velocity.X = horizontalInput * Speed;
+
+		// Apply gravity
+		velocity.Y += 8.0f;
+
+		// Handle jump
 		if (Input.IsKeyPressed(Key.Space))
 		{
-			if (_wasJumpReleased)
+			if (_wasJumpReleased && _characterBody.IsOnFloor())
 			{
 				_jumpStartTime = DateTime.UtcNow;
 			}
-
 			_wasJumpReleased = false;
 		}
 		else
 		{
 			_wasJumpReleased = true;
+			_jumpStartTime = null;
 		}
 
-		if (Input.IsKeyPressed(Key.W)) velocity.Y -= 1;
-		if (Input.IsKeyPressed(Key.S)) velocity.Y += 1;
-		if (Input.IsKeyPressed(Key.A)) 
+		if (_jumpStartTime.HasValue && !_wasJumpReleased)
 		{
-			velocity.X -= 1;
-			_knight.FlipH = true;
-		}
-		
-		if (Input.IsKeyPressed(Key.D)) 
-		{
-			velocity.X += 1;
-			_knight.FlipH = false;
+			var jumpElapsedTime = DateTime.UtcNow - _jumpStartTime;
+			if (jumpElapsedTime >= TimeSpan.FromMilliseconds(250))
+			{
+				_jumpStartTime = null;
+			}
+			velocity.Y -= 24;
 		}
 
-		// Normalize velocity to prevent faster diagonal movement
-		// velocity = velocity.Normalized();
-		
-		_characterBody.Position += velocity * Speed * (float)delta;		
+		// Set the velocity and move
+		_characterBody.Velocity = velocity;
 		_characterBody.MoveAndSlide();
 	}
 
