@@ -1,9 +1,9 @@
 [gd_scene load_steps=25 format=4 uid="uid://dnlth2ic2xpf1"]
 
 [ext_resource type="Script" path="res://HomeScene.cs" id="1_j54ic"]
-[ext_resource type="Texture2D" uid="uid://dvwbbqu081tx7" path="res://brackeys_platformer_assets/sprites/world_tileset.png" id="1_nfns1"]
-[ext_resource type="Texture2D" uid="uid://drqgnv121fal2" path="res://brackeys_platformer_assets/sprites/knight.png" id="2_d03oh"]
-[ext_resource type="Texture2D" uid="uid://m2m8yxybd57s" path="res://mystic-woods/characters/player.png" id="4_3o58x"]
+[ext_resource type="Texture2D" uid="uid://dvwbbqu081tx7" path="res://assets/brackeys_platformer_assets/sprites/world_tileset.png" id="1_nfns1"]
+[ext_resource type="Texture2D" uid="uid://drqgnv121fal2" path="res://assets/brackeys_platformer_assets/sprites/knight.png" id="2_d03oh"]
+[ext_resource type="Texture2D" uid="uid://m2m8yxybd57s" path="res://assets/mystic-woods/characters/player.png" id="4_3o58x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3w3gj"]
 texture = ExtResource("1_nfns1")
