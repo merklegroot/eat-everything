@@ -6,6 +6,7 @@ namespace EatEverything;
 
 public partial class HomeScene : Node2D
 {
+	private const float Gravity = 8.0f;
 	private const float Speed = 500.0f;
 	
 	private AnimatedSprite2D _knight;
@@ -54,7 +55,7 @@ public partial class HomeScene : Node2D
 	}
 
 	private bool _wasJumpReleased = true;
-	private DateTime? _jumpStartTime;
+	private float _jumpPower = 0;
 
 	public override void _Process(double delta)
 	{
@@ -78,38 +79,55 @@ public partial class HomeScene : Node2D
 			horizontalInput += 1;
 			_knight.FlipH = false;
 		}
-
-		// Set horizontal velocity
-		velocity.X = horizontalInput * Speed;
-
-		// Apply gravity
-		velocity.Y += 8.0f;
-
+		
+		
 		// Handle jump
 		if (Input.IsKeyPressed(Key.Space))
 		{
 			if (_wasJumpReleased && _characterBody.IsOnFloor())
 			{
-				_jumpStartTime = DateTime.UtcNow;
+				GD.Print("Jump!");
+				_jumpPower = 500;
 			}
+			
 			_wasJumpReleased = false;
 		}
 		else
 		{
-			_wasJumpReleased = true;
-			_jumpStartTime = null;
-		}
-
-		if (_jumpStartTime.HasValue && !_wasJumpReleased)
-		{
-			var jumpElapsedTime = DateTime.UtcNow - _jumpStartTime;
-			if (jumpElapsedTime >= TimeSpan.FromMilliseconds(250))
+			if (!_wasJumpReleased)
 			{
-				_jumpStartTime = null;
+				GD.Print("Jump released");
 			}
-			velocity.Y -= 24;
+			_wasJumpReleased = true;
 		}
 
+		if (_jumpPower > 0)
+		{
+			//const float maxJumpToConsume = 20;
+			//var jumpToConsume = _jumpPower >= maxJumpToConsume ? maxJumpToConsume : _jumpPower;
+			var jumpToConsume = _jumpPower / 10.0f;
+			if (jumpToConsume < 10) jumpToConsume = _jumpPower;
+
+			if (!_wasJumpReleased)
+			{
+				_jumpPower -= jumpToConsume;
+			}
+			else
+			{
+				_jumpPower -= 4 * jumpToConsume;;
+			}
+			
+			if (_jumpPower < 0) _jumpPower = 0;
+			
+			velocity.Y -= jumpToConsume;
+		}
+
+		// Set horizontal velocity
+		velocity.X = horizontalInput * Speed;
+		
+		// Apply gravity
+		velocity.Y += Gravity;
+		
 		// Set the velocity and move
 		_characterBody.Velocity = velocity;
 		_characterBody.MoveAndSlide();
@@ -119,7 +137,7 @@ public partial class HomeScene : Node2D
 	{
 		_characterBody.Position = new Vector2(_originalPosition.X, _originalPosition.Y);
 		_wasJumpReleased = true;
-		_jumpStartTime = null;
+		_jumpPower = 0;
 	}
 
 	private List<TileData> GetAllTiles()
