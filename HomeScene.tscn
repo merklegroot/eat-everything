@@ -1,9 +1,10 @@
-[gd_scene load_steps=25 format=4 uid="uid://dnlth2ic2xpf1"]
+[gd_scene load_steps=26 format=4 uid="uid://dnlth2ic2xpf1"]
 
 [ext_resource type="Script" path="res://HomeScene.cs" id="1_j54ic"]
 [ext_resource type="Texture2D" uid="uid://dvwbbqu081tx7" path="res://assets/brackeys_platformer_assets/sprites/world_tileset.png" id="1_nfns1"]
 [ext_resource type="Texture2D" uid="uid://drqgnv121fal2" path="res://assets/brackeys_platformer_assets/sprites/knight.png" id="2_d03oh"]
 [ext_resource type="Texture2D" uid="uid://m2m8yxybd57s" path="res://assets/mystic-woods/characters/player.png" id="4_3o58x"]
+[ext_resource type="PackedScene" uid="uid://b2s425x8pp8ic" path="res://GameTiles.tscn" id="5_syr6c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3w3gj"]
 texture = ExtResource("1_nfns1")
@@ -275,7 +276,7 @@ size = Vector2(61.5, 71)
 position = Vector2(98, 245)
 script = ExtResource("1_j54ic")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
+[node name="GameTileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-5, 276)
 scale = Vector2(4.01693, 4)
 tile_map_data = PackedByteArray("AAD///7/AAAAAAAAAAAAAP7/AAAAAAAAAAABAP7/AAAAAAAAAAABAP//AAAEAAEAAAABAAAAAAAEAAEAAAACAAAAAAAEAAEAAAACAP//AAAEAAEAAAAAAP//AAAEAAEAAAD/////AAAEAAEAAAD//wAAAAAEAAEAAAAAAAAAAAAEAAEAAAACAP7/AAAAAAAAAAAFAP7/AAACAAAAAAAGAP7/AAACAAAAAAAHAP7/AAACAAAAAAAJAPz/AAACAAAAAAAKAPz/AAACAAAAAAALAPz/AAACAAAAAAA=")
@@ -292,3 +293,6 @@ animation = &"jump_animation"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
 position = Vector2(-30.75, -16.5)
 shape = SubResource("RectangleShape2D_63i5d")
+
+[node name="GameTiles" parent="." instance=ExtResource("5_syr6c")]
+position = Vector2(-31, 56)

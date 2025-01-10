@@ -14,15 +14,7 @@ public partial class HomeScene : Node2D
 
 	private Vector2 _originalPosition;
 
-	private TileMapLayer _tileMap;
-	
-	// You can customize this class based on what tile data you need
-	private class TileData
-	{
-		public Vector2I Position { get; set; }
-		public int TileId { get; set; }
-		public Vector2I AtlasCoords { get; set; }
-	}
+	private TileMapLayer _tileMap;	
 
 	private static class Animations
 	{
@@ -39,19 +31,11 @@ public partial class HomeScene : Node2D
 
 		_originalPosition = new Vector2(_characterBody.Position.X, _characterBody.Position.Y);
 
-		_tileMap = GetNode<TileMapLayer>("TileMapLayer");
-		var tiles = GetAllTiles();
+		_tileMap = GetNode<TileMapLayer>("GameTileMapLayer");
+		var tiles = TileUtil.GetAllTiles(_tileMap);
 
-		// ShowTilePositions(tiles);
-		CreateCollisionShapesForTiles(tiles);
-	}
-
-	private void ShowTilePositions(List<TileData> tiles)
-	{
-		foreach (var tile in tiles)
-		{
-			GD.Print($"Tile at {tile.Position}, ID: {tile.TileId}, Atlas: {tile.AtlasCoords}");
-		}
+		var collisionParent = TileUtil.GenerateCollisionShapesForTiles(_tileMap, tiles);
+		AddChild(collisionParent);
 	}
 
 	private bool _wasJumpReleased = true;
@@ -168,41 +152,5 @@ public partial class HomeScene : Node2D
 		}
 
 		return tiles;
-	}
-
-	private void CreateCollisionShapesForTiles(List<TileData> tiles)
-	{
-		// Base tile size is 16x16
-		var tileSize = new Vector2(16, 16);
-		// Account for the TileMap's scale of 4 AND scale by 1.6 instead of 2
-		var scaledTileSize = tileSize * 3.0f;
-		
-		GD.Print($"Scaled tile size: {scaledTileSize}");
-		GD.Print($"TileMap position: {_tileMap.Position}");
-
-		var collisionParent = new Node2D();
-		AddChild(collisionParent);
-
-		foreach (var tile in tiles)
-		{
-			var staticBody = new StaticBody2D();
-			var collision = new CollisionShape2D();
-			var shape = new RectangleShape2D();
-			
-			shape.Size = scaledTileSize;
-			collision.Shape = shape;
-			staticBody.AddChild(collision);
-
-			// Get the tile's world position
-			var tilePos = _tileMap.MapToLocal(tile.Position);
-			GD.Print($"Tile at {tile.Position}, World pos: {tilePos}");
-			
-			// Scale the local position by 4 to match TileMap's scale
-			var scaledPos = tilePos * 4;
-			// Add TileMap position and center offset
-			staticBody.Position = _tileMap.Position + scaledPos + scaledTileSize / 5.0f;
-			
-			collisionParent.AddChild(staticBody);
-		}
 	}
 }
